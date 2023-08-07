@@ -7,7 +7,7 @@ extends layout
 
 
 block content 
-    ul
-    -for (var user in model){
-      li #{user.name}
-    }
+    include ./includes/header
+
+    //- partial view yapısının referans olarak index kısmında kullanılmasını çağırılmasını sağladık.
+    //- sabit statik template işlemleri için include dinamik template işlemleri ise mixin function kullanıyoruz.

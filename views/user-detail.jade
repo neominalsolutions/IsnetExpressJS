@@ -5,4 +5,13 @@ block content
     h1  ziyaretçi
   else
     h1 #{model.name}
+
+  +deneme('img-1','img1')
+  +deneme('img-2','img2')
+
+  //- sayfamızda birden fazla kez kullancağımız karmaşık bir template blogu varsa bu template blogunu fonksiyonlaştırıp ekrana render etmek için kullanılan bir teknik.
  
+mixin deneme(imageName,caption)
+  div.deneme
+    img(src=imageName)
+    h4.image-caption=caption
