@@ -1,0 +1,65 @@
+extend layout 
+
+block content 
+  p=a.title
+  ul 
+  -for user in model.users
+    li(id=user.id) #{user.name} 
+
+    //- dinamik template değerleri için attribute tanımı
+
+    //- yukarıdaki kullanım örneği en güncel jade versiyon templating yazım şekli.
+  
+  ul 
+    each user, i in model
+      li.deneme index: #{i} #{user.name}
+
+    //- static değerler için attribute id class tanımı
+    //- .className #idName
+
+  ul#books
+  li
+    a(href="#book-a") Book A
+  li: a(href="#book-b") Book B
+      
+  p 
+    | yazı 1.satır 
+    | yazı 2.satır
+    
+  p.
+    foo bar
+    hello world
+
+  //- yukarıdaki yazım ile aşağıdaki . yazım arasında bir fark yok. Birden fazla satır şeklinde okunaklı olarak jade template de görünsün diye yazılan bir format
+
+  - var foo = "hello world"
+
+  p=foo
+
+  //- direk yukarıdaki değişkenin değerini p elementine bas
+  //- yukarıdaki ile aşağıdaki arasında herhangi bir fark yok
+  //- aynı çıktıyı üretecektir.
+  p #{foo}
+
+  - var val = {"name": "Hello <em>World</em>"}
+
+  p #{val.name}
+  p !{val.name}
+
+  //- swithcase yapısı   
+
+  case val.name
+    when "Bob"
+      p Hi Bob!
+    when "Alice"
+      p Howdy Alice!
+    default
+      p Hello #{val.name}!
+
+
+  //- !{name} html parsing format uygular
+  //- #{name} direkt olarak string formatta ekrana basar.
+
+
+  
+

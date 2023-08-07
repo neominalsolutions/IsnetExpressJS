@@ -1,0 +1,8 @@
+extends layout 
+
+block content 
+  if model.name == "guest"
+    h1  ziyaretçi
+  else
+    h1 #{model.name}
+ 

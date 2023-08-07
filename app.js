@@ -22,7 +22,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // uygulamaya viewler views klasöründen okunsun dedik
-app.set('view engine', 'hbs');
+app.set('view engine', 'jade');
 // express uygulamalarında birden fazla template engine kullanılabilir.
 // bunlardan en yaygınları jade ve hbs (handlebars) view engine
 // view için jade view engine kullanacağız
