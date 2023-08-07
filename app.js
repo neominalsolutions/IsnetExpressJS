@@ -6,6 +6,7 @@ var express = require('express')
 var path = require('path'); // nodejs core module
 var cookieParser = require('cookie-parser');
 var logger = require('morgan'); // requestleri loglamak için kullanılan bir middleware
+var session = require('express-session');
 
 // uygulamanın ana route 
 var indexRouter = require('./routes/index');
@@ -35,6 +36,9 @@ app.use(express.urlencoded({ extended: true })); // formdan gelen istekleri yaka
 app.use(cookieParser()); // uygulamada cookie kullan
 // set ettiğimiz cookie değerlerini request üzerinden get ederken ilgili değerin parse edilmesini sağlar.
 
+app.use(session({secret:'x-secret'}));
+// session middleware aktif hale getir.
+
 // __dirname nodejs current directoryName
 // public dosyalarına erişim için bu middleware önemli
 app.use(express.static(path.join(__dirname, 'public')));
@@ -60,7 +64,6 @@ app.use(function (req,res,next) {
   }
 });
 */
-
 /*
 app.use(function (req,res,next) {
   // response içerisinde username denilen bir değişken sakladım.

@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
 });
 
 router.get('/setCookie', function (req,res,next) {
-  res.cookie('name','ali');
+  res.cookie('name','ali',{maxAge:3600000});
   // res.cookie ile cookie değeri oluşturdum.
   // tarayıcıdan document.cookie olarak erişebilmem lazım.
   res.send('cookie set edildi');
@@ -36,5 +36,16 @@ router.get('/getCookie', function (req,res,next) {
   res.send('cookie get edildi: ' + req.cookies['name']);
 });
 
+router.get('/getSession', function (req,res,next) {
+  // sessionId değerini sunucu üretir.
+  // her sunucu açılan kullanıcı bazlı session için unique bir session değeri üretecektir.
+  res.send('session get edildi :' + req.session.id + "custom session :" + req.session['name'].name);
+});
+
+router.get('/setSession', function (req,res,next) {
+  // session değer set etmek için kullandık
+  req.session['name'] = {id:1,name:'ahmet'};
+  res.send('session set edildi');
+});
 // js dosyasını dışarıdan başka bir js dosyasından çağrımak için module.export komutunu kullanıyoruz.
 module.exports = router;
