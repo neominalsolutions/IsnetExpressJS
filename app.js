@@ -2,7 +2,7 @@
 
 // CommonJS formatında bir web uygulamasında olması gereken required bileşenler tanımlanmış
 var createError = require('http-errors');
-var express = require('express');
+var express = require('express')
 var path = require('path'); // nodejs core module
 var cookieParser = require('cookie-parser');
 var logger = require('morgan'); // requestleri loglamak için kullanılan bir middleware
