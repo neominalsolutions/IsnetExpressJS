@@ -84,8 +84,49 @@ router.post('/', function (req,res,next) {
 // PUT işlemlerinde response body içerisinde veri döndürmemiz gerek maliyetli bir işlem.
 // user ={id:1,name:'ali', surname:'can', friends:["cenk","mustafa"]}
 router.put('/:id', function (req,res,next) {
+
+  const collection =  db.collection('user');
+
+  // const count = collection.countDocuments();
+
+  
+  collection.findOne({_id:new ObjectId(req.params.id)}).then(response => {
+    if(response){
+      collection.updateOne({name:response.name},{$set:{name:req.body.name}}).then(updateResponse => {
+        res.status(204).send(updateResponse);
+      }).catch(err => {
+        res.status(500).json({error:err.message}); // mongo dbupdate exception message
+      })
+    } else {
+      res.status(404).send('Kullanıcı bulunamadı');
+    }
+  }).catch(err => {
+    // console.log('err', err.message);
+    res.status(500).send(err); // Id parsing hatası
+  });
+
+ 
+
   
 });
+
+// api/todos/async/1
+router.put('/async/:id', async function (req,res,next) {
+    // async await
+
+    try {
+      // sıralı operasyonları then catch blokları içerisinde yazmak zor olduğundan dolayı async await yapısı ile promiseleri çözmüş olduk.
+     const response = await db.collection('user').findOne({_id:new ObjectId(req.params.id)});
+
+     var updateRes = await db.collection('user').updateOne({name:response.name},{$set:{name:req.body.name}});
+
+     res.status(204).send(updateRes);
+
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+    
+})
 
 // api/users/1/friends
 // doküman tabanlı sistemlerde nesneler nested iç içe obje olarak tutulduğundan ana nesne altındaki nesnelerde bir modifiye işlemi yapılacağı zaman patch verb tercih edilir.
@@ -93,8 +134,28 @@ router.patch('/:id/friends', function (req,res,next) {
   
 });
 
-router.delete('/:id', function (req,res,next) {
+router.delete('/:id', async function (req,res,next) {
+
+  try {
+
+    let query = {_id:new ObjectId (req.params.id)}
+
+    var doc = await db.collection('user').findOne(query);
+
+    if(doc){
+      await db.collection('user').deleteOne(query);
   
+      // delete kısmında mongo eğer id değerini bulamazsa exception fırmaltmıyor. bu case için delete işlemi gerçekleşmiyor. find ile bulunup eğer silinecek kayıt yoksa 404 fırlatmamız lazım
+      res.status(204).send();
+    } else {
+      res.status(404).send('Kayıt bulunamadı');
+    }
+
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+ 
 });
 
 // export kodunu unutmayalım
