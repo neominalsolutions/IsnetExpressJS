@@ -64,6 +64,7 @@ router.post('/', function (req,res,next) {
     if(param.name == '' || param.name == undefined){
       res.status(500).send('name alanı boş geçilemez');
     } else {
+
       db.collection('user')
       .insertOne({name:param.name.trim()})
       .then(response => {
