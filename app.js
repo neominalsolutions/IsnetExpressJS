@@ -12,6 +12,7 @@ var session = require('express-session');
 var indexRouter = require('./routes/index');
 // users route
 var usersRouter = require('./routes/users');
+var todosRouter = require('./routes/todos');
 
 // net core tarafındaki servis.add(); servis collection yapılarını tanımladığımız kısım.
 // uygulamanın çalışması için gerekli olan servisler
@@ -82,6 +83,7 @@ app.use('/test', function (req,res,next)   {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/todos', todosRouter); // gelen istekleri bu route yönlendir.
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
